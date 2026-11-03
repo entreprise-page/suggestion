@@ -38,6 +38,22 @@ const widget = attach(document.querySelector('input[name="entreprise"]'), {
 // widget.destroy() retire la liste et les écouteurs.
 ```
 
+### Depuis un CDN
+
+Sans npm ni bundler, le fichier `dist/suggestion.min.js` expose tout le point d'entrée JavaScript natif (dont `@entreprise-page/api-client`) dans la variable globale `EntrepriseSuggestion` :
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@entreprise-page/suggestion@1/dist/style.css" />
+<script src="https://cdn.jsdelivr.net/npm/@entreprise-page/suggestion@1/dist/suggestion.min.js"></script>
+<script>
+  EntrepriseSuggestion.attach(document.querySelector('input[name="entreprise"]'), {
+    onSelect: (suggestion) => (window.location.href = `https://entreprise.page/${suggestion.slug}`),
+  });
+</script>
+```
+
+`https://unpkg.com/@entreprise-page/suggestion@1` fonctionne aussi. En production, fixez la version exacte (`@1.2.3`) plutôt que la majeure.
+
 La liste `<ul class="suggestions">` est insérée juste après le champ, et le parent du champ reçoit la classe `suggestion-open` tant qu'elle est ouverte. Chaque `<li>` contient `<b>nom</b><span>localité</span><i>activité</i>` ; l'option `render(suggestion, li)` remplace ce contenu, et `classes` renomme les classes.
 
 ## Vue
